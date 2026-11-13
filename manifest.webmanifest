@@ -1,0 +1,16 @@
+{
+  "name": "XRay Lens",
+  "short_name": "XRay Lens",
+  "description": "See the skull, brain and muscles inside your own head, tracked live through your camera.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090c13",
+  "theme_color": "#090c13",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

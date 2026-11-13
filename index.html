@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090c13">
+<title>XRay Lens</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="stagecol">
+    <div class="stage" id="stage">
+      <video id="video" playsinline muted autoplay></video>
+      <canvas id="shade"></canvas>
+      <canvas id="gl"></canvas>
+      <canvas id="hud"></canvas>
+      <div id="intro">
+        <h2>XRAY LENS</h2>
+        <p>See the skull, brain and muscles inside your own head, tracked live through your camera. Hold a hand up to see its bones.</p>
+        <button class="big" id="start">Start camera</button>
+      </div>
+    </div>
+  </div>
+
+  <aside>
+    <h1>XRay Lens</h1>
+    <div class="panel"><div id="status">Tap Start camera, then allow the camera.</div></div>
+
+    <div class="panel">
+      <h3>Layers</h3>
+      <div class="chips">
+        <button data-preset="skull">Skull</button>
+        <button data-preset="brain">Brain</button>
+        <button data-preset="muscles">Muscles</button>
+        <button data-preset="all">Everything</button>
+      </div>
+      <div class="checks">
+        <label class="ck"><input type="checkbox" id="L_skull"><i style="background:#bfe3ff"></i>Skull</label>
+        <label class="ck"><input type="checkbox" id="L_brain"><i style="background:#ff9fc0"></i>Brain</label>
+        <label class="ck"><input type="checkbox" id="L_muscles"><i style="background:#ff6b5e"></i>Muscles</label>
+        <label class="ck"><input type="checkbox" id="L_eyes"><i style="background:#fff3a8"></i>Eyes</label>
+        <label class="ck"><input type="checkbox" id="L_outline"><i style="background:#6fb6ff"></i>Head outline</label>
+        <label class="ck"><input type="checkbox" id="L_hands"><i style="background:#d9f0ff"></i>Hand bones</label>
+      </div>
+      <div class="row" style="margin-top:13px;border-top:1px solid var(--line);padding-top:11px">
+        <label class="ck" style="font-weight:600"><input type="checkbox" id="labels">Show labels</label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Look</h3>
+      <div class="seg" id="style">
+        <button data-style="xray">X-ray</button>
+        <button data-style="solid">Solid</button>
+      </div>
+      <div class="row"><label for="bright">Brightness</label><input id="bright" type="range" min="0.3" max="2.2" step="0.01"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Mixed reality</h3>
+      <div class="row"><label for="real">Real me showing through</label><input id="real" type="range" min="0" max="1" step="0.01"></div>
+      <div class="row"><label for="feather">Edge feather <b id="featherv"></b></label><input id="feather" type="range" min="0" max="1" step="0.01"></div>
+      <div class="row">
+        <label for="reveal">Reveal</label>
+        <select id="reveal">
+          <option value="whole">Whole head</option>
+          <option value="left">Left half only</option>
+          <option value="right">Right half only</option>
+          <option value="top">Top of the head only</option>
+          <option value="bottom">Lower face only</option>
+          <option value="lens">X-ray lens (follows your fingertip)</option>
+        </select>
+      </div>
+      <div class="row" id="cutrow"><label for="cut" id="cutlabel">Cut position</label><input id="cut" type="range" min="0" max="1" step="0.005"></div>
+    </div>
+
+    <div class="panel">
+      <label class="ck"><input type="checkbox" id="showdata">Show tracking data</label>
+      <pre id="data" hidden></pre>
+    </div>
+
+    <div class="panel">
+      <h3>Fit to my head</h3>
+      <div class="row"><label for="fs">Overall size <b id="fsv"></b></label><input id="fs" type="range" min="0.7" max="1.4" step="0.005"></div>
+      <div class="row"><label for="fw">Width <b id="fwv"></b></label><input id="fw" type="range" min="0.8" max="1.25" step="0.005"></div>
+      <div class="row"><label for="fh">Height <b id="fhv"></b></label><input id="fh" type="range" min="0.8" max="1.25" step="0.005"></div>
+      <div class="row"><label for="fd">Depth <b id="fdv"></b></label><input id="fd" type="range" min="0.8" max="1.25" step="0.005"></div>
+      <div class="row"><label for="fx">Left / right <b id="fxv"></b></label><input id="fx" type="range" min="-3" max="3" step="0.1"></div>
+      <div class="row"><label for="fy">Up / down <b id="fyv"></b></label><input id="fy" type="range" min="-4" max="4" step="0.1"></div>
+      <div class="row"><label for="fz">Forward / back <b id="fzv"></b></label><input id="fz" type="range" min="-4" max="4" step="0.1"></div>
+      <button class="linkbtn" id="fitreset" type="button">Reset fit</button>
+      <p class="small" style="margin-top:8px">Tip: pick the Solid look and set "Real me showing through" to about half, then line the skull up with your face.</p>
+    </div>
+
+    <p class="small">The anatomy is a real 3D dataset of one adult, scaled and pinned to your head. It shows where structures typically sit, not a scan of you, and it is not a medical tool. Video is processed on this device and never uploaded.</p>
+    <p class="small">Anatomy models: BodyParts3D, © The Database Center for Life Science, licensed under CC Attribution-Share Alike 2.1 Japan. Models were simplified and re-aligned.</p>
+  </aside>
+</div>
+
+<script type="module" src="js/app.js"></script>
+<script>
+  // Offline support: cache the app shell, 3D data, trackers and models after the first visit.
+  // (The Android app serves these files itself, so it skips the service worker.)
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !/; wv\)/.test(navigator.userAgent))
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+</script>
+</body>
+</html>
