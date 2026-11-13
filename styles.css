@@ -1,0 +1,52 @@
+:root { --bg:#090c13; --panel:#141926; --line:#262d42; --fg:#eef1f8; --dim:#8b95b2;
+          --accent:#7fd1ff; --ok:#57d98a; --bad:#ff5d73; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; min-height:100%; background:var(--bg); color:var(--fg);
+              font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  .wrap { display:flex; gap:20px; padding:20px; justify-content:center; align-items:flex-start; }
+  .stagecol { flex:1 1 auto; min-width:0; display:flex; justify-content:center; }
+  .stage { position:relative; width:min(100%, calc((100vh - 40px) * var(--ar, 1.3333))); aspect-ratio:var(--ar, 1.3333);
+           background:radial-gradient(ellipse at 50% 40%, #131a2b, #05070c 75%); border:1px solid var(--line);
+           border-radius:16px; overflow:hidden; }
+  .stage video, .stage canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  #video { object-fit:cover; transform:scaleX(-1); }
+  #shade, #gl { transform:scaleX(-1); pointer-events:none; }
+  #hud { pointer-events:none; }
+  #intro { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+           gap:14px; text-align:center; padding:24px; }
+  #intro h2 { margin:0; font-size:30px; letter-spacing:.04em; font-weight:800; }
+  #intro p { margin:0; color:var(--dim); max-width:46ch; }
+  button.big { font:inherit; font-weight:700; font-size:17px; color:#06121c; background:var(--accent);
+               border:0; border-radius:12px; padding:13px 22px; cursor:pointer; }
+  button.big:disabled { opacity:.6; cursor:default; }
+  aside { flex:0 0 330px; display:flex; flex-direction:column; gap:12px; }
+  h1 { margin:0; font-size:24px; letter-spacing:.03em; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:13px 15px; }
+  .panel h3 { margin:0 0 9px; font-size:12px; font-weight:600; color:var(--dim); text-transform:uppercase; letter-spacing:.09em; }
+  #status { font-weight:600; font-size:14px; }
+  #status.ok { color:var(--ok); } #status.bad { color:var(--bad); }
+  .chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .chips button, .seg button { font:inherit; font-size:13px; color:var(--fg); background:#0b0f18; border:1px solid var(--line);
+                  border-radius:9px; padding:7px 11px; cursor:pointer; }
+  .chips button:hover, .seg button:hover { border-color:var(--accent); }
+  .seg { display:flex; gap:7px; }
+  .seg button { flex:1; }
+  .seg button.on { background:var(--accent); color:#06121c; border-color:var(--accent); font-weight:700; }
+  .checks { display:grid; grid-template-columns:1fr 1fr; gap:7px 12px; margin-top:11px; }
+  label.ck { display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer; }
+  label.ck i { width:10px; height:10px; border-radius:50%; flex:none; }
+  input[type=checkbox] { width:17px; height:17px; margin:0; accent-color:var(--accent); }
+  .row { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px; margin-top:11px; }
+  .row:first-of-type { margin-top:0; }
+  .row input[type=range] { flex:1; max-width:52%; accent-color:var(--accent); }
+  .row label b { font-weight:500; color:var(--dim); font-size:12px; margin-left:4px; font-variant-numeric:tabular-nums; }
+  select { font:inherit; font-size:14px; color:var(--fg); background:#0b0f18; border:1px solid var(--line);
+           border-radius:8px; padding:6px 8px; max-width:60%; }
+  #data { margin:11px 0 0; padding:9px 11px; background:#0b0f18; border:1px solid var(--line); border-radius:8px;
+          font:12px/1.5 ui-monospace,Menlo,Consolas,monospace; white-space:pre-wrap; font-variant-numeric:tabular-nums; }
+  details summary { cursor:pointer; font-size:13px; color:var(--dim); }
+  details[open] summary { margin-bottom:10px; }
+  .small { font-size:12px; color:var(--dim); margin:0; }
+  .linkbtn { font:inherit; font-size:12px; color:var(--accent); background:none; border:0; padding:0; cursor:pointer; margin-top:10px; }
+  [hidden] { display:none !important; }
+  @media (max-width:900px) { .wrap { flex-direction:column; align-items:stretch; } aside { flex:none; } .stage { width:100%; } }
